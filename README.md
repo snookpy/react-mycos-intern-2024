@@ -15,3 +15,10 @@ This project created by Vite contains React + TypeScript + Vite
 - React State with API
 - React Hook
 - Layout and Design pattern (example: Container Pattern)
+
+## Pre install project
+```
+npm install
+
+npm run dev
+```
