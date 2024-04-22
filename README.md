@@ -8,7 +8,7 @@ This project created by Vite contains React + TypeScript + Vite
 
 
 # Table of Contents
-- [HTML Semantic And CSS Grid](./docs/HtmlAndGrid.md)
+- [HTML Semantic](./docs/Html.md)
 - [Basic Javascript and Typescript](./docs/BasicTypescript.md)
 - Debugging
 - What is React

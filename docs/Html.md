@@ -1,8 +1,10 @@
-# What is HTML
+# Semantic Html And Css
+simple html and css, if we use only div or span for all of elements, it properly wrong.
 
+## Html Component
 HTML only display purpose no logic
 
-## Skeleton
+### Skeleton
 
 look like tree `<!DOCTYPE html>` is define to HTML V5
 
@@ -29,10 +31,6 @@ example:
   </body>
 </html>
 ```
-
-## Semantic HTML
-
-If we use only div or span for all of elements, it properly wrong.
 
 ### Landmarks
 
@@ -63,19 +61,20 @@ The `<button>` element should be used for any interaction that performs an actio
 
 `How to eat healthy`
 
-### Bad
+#### Bad
 
 `Click Here`
 
 `See more`
 
-### Heading
+#### Heading
 
 Headings should be relationships between different sections eg. `<h1>` used for main headings, followed by `<h2>` headings, then the less important `<h3>`, and so on.
 
-### Other
+### Image
+Image mostly use today, normally image has two type, Decorative and Meaningful.
 
-Image `<img>` which `<img alt="">` mean screen render will not read this image if the image is important we need to describe alt
+Image `<img>` which `<img alt="">` mean screen render will not read this image if the image is important we need to describe alt.
 
 ### Web Accessibility
 
@@ -194,12 +193,22 @@ example
 </p>
 ```
 
+![img-error-form](./img_ee_error-proximity.png)
+
+
 ### Text Size
 Use `rem` instead of fix with `pixel` for support chrome config font and zoom page.
-
 ```css
 .model-name {
   font-size: 1.125rem;
+}
+```
+
+line-hight use with out unit
+
+```css
+.text {
+	line-hight
 }
 ```
 
@@ -207,3 +216,22 @@ Use `rem` instead of fix with `pixel` for support chrome config font and zoom pa
 Use https://www.siegemedia.com/contrast-ratio
 measure contrast between text or graphics against the background color, we should have minimum value with 4.5, 7 is more useful
 (black and white is about 21)
+
+
+### Custom Element Especially div tag
+Do not forget to add role name
+
+example accordion (collapse/expand)
+
+![custom-element-ex](./img_uber_faq.png)
+
+```html
+<div role="button">When do I get charged for a ride? (plus icon)</div>
+```
+
+tell a screen render it is closed
+
+```html
+<div role="button" aria-expanded="false">When do I get charged for a ride? (minus icon)</div>
+```
+
