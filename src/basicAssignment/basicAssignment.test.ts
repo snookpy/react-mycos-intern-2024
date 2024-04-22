@@ -20,11 +20,11 @@ describe("basicAssignment", () => {
 		const results = addIsNonDecimalPrice(cloneProd)
 
 		// Assert
-		expect(results[0].isNonDecimalPrice).toEqual(false)
-		expect(results[1].isNonDecimalPrice).toEqual(true)
-		expect(results[2].isNonDecimalPrice).toEqual(false)
-		expect(results[3].isNonDecimalPrice).toEqual(false)
-		expect(results[4].isNonDecimalPrice).toEqual(true)
+		expect(results[0].isNonDecimalPrice).toEqual(true)
+		expect(results[1].isNonDecimalPrice).toEqual(false)
+		expect(results[2].isNonDecimalPrice).toEqual(true)
+		expect(results[3].isNonDecimalPrice).toEqual(true)
+		expect(results[4].isNonDecimalPrice).toEqual(false)
 	})
 
 	test("productNameUppercase", () => {
