@@ -196,7 +196,7 @@ example
 ![img-error-form](./img_ee_error-proximity.png)
 
 
-### Text Size
+### Text Size & Image Type
 Use `rem` instead of fix with `pixel` for support chrome config font and zoom page.
 ```css
 .model-name {
@@ -208,9 +208,12 @@ line-hight use with out unit
 
 ```css
 .text {
-	line-hight
+	line-hight: 1.5
 }
 ```
+
+Use vector graphics like `SVG` instead of raster graphics like `PNG`
+
 
 ### Color Contrast
 Use https://www.siegemedia.com/contrast-ratio
