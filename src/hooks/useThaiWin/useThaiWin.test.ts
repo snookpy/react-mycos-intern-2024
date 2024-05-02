@@ -4,7 +4,7 @@ import useThaiWin from './useThaiWin'
 import  * as api from '../../api/weWinApi'
 import { act, renderHook } from '@testing-library/react'
 
-describe.skip('useThaiWin', () => {
+describe('useThaiWin', () => {
     test('fully return;', () => {
         // Arrange & Act
         const { result } = renderHook(useThaiWin)

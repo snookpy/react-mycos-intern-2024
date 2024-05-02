@@ -29,7 +29,9 @@ export const homeworkProducts: HomeworkProduct[] = [
 export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
-	return []
+	const result: NonDecimalProduct[] = products.map((product) => 
+		product.price % 1 === 0 ? { ...product, isNonDecimalPrice: true } : { ...product, isNonDecimalPrice: false })
+	return result
 }
 
 /**

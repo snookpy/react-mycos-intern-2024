@@ -1,7 +1,7 @@
 import usePrimeNumber from "./usePrimeNumber"
 import { act, renderHook } from "@testing-library/react"
 
-describe.skip("usePrimeNumber", () => {
+describe("usePrimeNumber", () => {
 	test("initial fully return [isPrime, calFunction, inputNum];", () => {
 		const { result } = renderHook(usePrimeNumber)
 

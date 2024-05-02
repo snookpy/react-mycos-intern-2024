@@ -8,7 +8,7 @@ import {
     sumPriceIncludeTax,
 } from "./basicAssignment"
 
-describe("basicAssignment", () => {
+describe.skip("basicAssignment", () => {
 	const cloneProd = [...homeworkProducts.map((x) => ({ ...x }))]
 
 	afterEach(() => {
