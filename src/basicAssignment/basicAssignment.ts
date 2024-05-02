@@ -29,7 +29,15 @@ export const homeworkProducts: HomeworkProduct[] = [
 export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
-	return []
+	const checkNonDecimal = products.map(product => {
+		const isNonDecimalPrice: boolean = !Number.isInteger(product.price);
+		return {
+			...product,
+			isNonDecimalPrice
+		};
+	});
+
+	return checkNonDecimal
 }
 
 /**
@@ -38,7 +46,14 @@ export const addIsNonDecimalPrice = (
 export const productNameUppercase = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const upperProductName = products.map(product => {
+		return {
+			...product,
+			name: product.name.toUpperCase()
+		};
+	});
+
+	return upperProductName
 }
 
 /**
@@ -47,14 +62,33 @@ export const productNameUppercase = (
 export const addTenTaxToNonIncludeTaxProduct = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const addTenTax = products.map(product => {
+		if (!product.isIncludeTax) {
+			const calTax = product.price * 0.1
+			const newPrice = product.price + calTax
+
+			return {
+				...product,
+				price: newPrice,
+				isIncludeTax: true
+			};
+		}
+
+		return product;
+	});
+
+	return addTenTax;
+	
 }
 
 /**
  * return new array with products price over 50 only
  */
 export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
-	return products
+	const price50 = products.filter(product => {
+		return product.price > 50;
+	});
+	return price50;
 }
 
 /**
@@ -67,7 +101,21 @@ export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
 export const addCountryToExcludeTax = (
 	products: HomeworkProduct[]
 ): ExtraHomeworkProduct[] => {
-	return products
+	const addCountryOrDiscount = products.map(product => {
+		if (!product.isIncludeTax) {
+			return {
+				...product,
+				country: 'china'
+			}
+		} else {
+			return {
+				...product,
+				discount: 0.10
+			};
+		};
+	});
+
+	return addCountryOrDiscount;
 }
 
 /**
@@ -76,5 +124,13 @@ export const addCountryToExcludeTax = (
 export const sumPriceIncludeTax = (
 	products: HomeworkProduct[]
 ): number => {
-	return 0
+	const totalPrice = products.reduce((total, curProduct) => {
+		if (curProduct.isIncludeTax){
+			return total + curProduct.price;
+		};
+
+		return total;
+	}, 0);
+	
+	return totalPrice;
 }
