@@ -2,11 +2,12 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import {
-  //   addCountryToExcludeTax,
-  homeworkProducts,
-  priceOver50,
-} from "./basicAssignment/basicAssignment";
+// import {
+//   addIsNonDecimalPrice,
+//   //   addCountryToExcludeTax,
+//   homeworkProducts,
+//   //   priceOver50,
+// } from "./basicAssignment/basicAssignment";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,7 +16,8 @@ function App() {
   //console.log(addTenTaxToNonIncludeTaxProduct(homeworkProducts));
   //console.log(productNameUppercase(homeworkProducts));
   //console.log(addCountryToExcludeTax(homeworkProducts));
-  console.log(priceOver50(homeworkProducts));
+  //console.log(priceOver50(homeworkProducts));
+  //console.log(addIsNonDecimalPrice(homeworkProducts));
 
   return (
     <>
