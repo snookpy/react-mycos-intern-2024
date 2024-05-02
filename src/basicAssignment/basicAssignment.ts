@@ -30,7 +30,7 @@ export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
 	const checkNonDecimal = products.map(product => {
-		const isNonDecimalPrice: boolean = !Number.isInteger(product.price);
+		const isNonDecimalPrice: boolean = Number.isInteger(product.price);
 		return {
 			...product,
 			isNonDecimalPrice
