@@ -10,34 +10,34 @@ const UpsertTodoItem = () => {
   const [todo, setTodo] = useState<ITodo | undefined>();
   const [todoName, setTodoName] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
-  const onSave = async () => {
-    if (!todo?.id && !todo) {
-      await todoApi.addTodo({
-        name: todoName,
-        isDone: false,
-        detail: todoDetail,
-      });
-    } else {
-      await todoApi.updateTodo(todo.id!, {
-        ...todo,
-        detail: todoDetail,
-        name: todoName,
-      });
-    }
-    navigate("/todos");
-  };
-  const loadTodo = useCallback(async (id: string) => {
-    const res = await todoApi.getTodo(id);
-    setTodo(res.data);
-    setTodoName(res.data.name ?? "");
-    setTodoDetail("");
-  }, []);
+  // const onSave = async () => {
+  //   if (!todo?.id && !todo) {
+  //     await todoApi.addTodo({
+  //       name: todoName,
+  //       isDone: false,
+  //       detail: todoDetail,
+  //     });
+  //   } else {
+  //     await todoApi.updateTodo(todo.id!, {
+  //       ...todo,
+  //       detail: todoDetail,
+  //       name: todoName,
+  //     });
+  //   }
+  //   navigate("/todos");
+  // };
+  // const loadTodo = useCallback(async (id: string) => {
+  //   const res = await todoApi.getTodo(id);
+  //   setTodo(res.data);
+  //   setTodoName(res.data.name ?? "");
+  //   setTodoDetail("");
+  // }, []);
 
-  useEffect(() => {
-    if (id) {
-      loadTodo(id);
-    }
-  }, [id, loadTodo]);
+  // useEffect(() => {
+  //   if (id) {
+  //     loadTodo(id);
+  //   }
+  // }, [id, loadTodo]);
 
   return (
     <div>
@@ -65,7 +65,7 @@ const UpsertTodoItem = () => {
       </Grid>
       <Grid container spacing={2} justifyContent={"end"} pt={3}>
         <Grid item>
-          <Button onClick={onSave}>Save</Button>
+          {/* <Button onClick={onSave}>Save</Button> */}
         </Grid>
         <Grid item>
           <Button onClick={() => navigate("/todos")} color="secondary">

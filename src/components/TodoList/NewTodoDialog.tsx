@@ -21,15 +21,15 @@ const AddTodoDialog = ({
 }) => {
   const [todoName, setTodoName] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
-  const onSave = async () => {
-    await todoApi.addTodo({
-      name: todoName,
-      isDone: false,
-      detail: todoDetail,
-    });
-    onSuccess?.();
-    onClose();
-  };
+  // const onSave = async () => {
+  //   await todoApi.addTodo({
+  //     name: todoName,
+  //     isDone: false,
+  //     detail: todoDetail,
+  //   });
+  //   onSuccess?.();
+  //   onClose();
+  // };
 
   useEffect(() => {
     if (open) {
@@ -66,7 +66,7 @@ const AddTodoDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onSave}>Save</Button>
+        {/* <Button onClick={onSave}>Save</Button> */}
         <Button onClick={onClose} color="secondary">
           Cancel
         </Button>

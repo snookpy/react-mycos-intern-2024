@@ -9,29 +9,12 @@ interface ITodoItemProps {
 const TodoItem = (props: ITodoItemProps) => {
   const { todoItem } = props;
   const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
-  const onChange = useCallback(
-    async (value: boolean) => {
-      const newTodo: ITodo = { ...innerTodo, isDone: value };
-      if (newTodo.id) await todoApi.updateTodo(newTodo.id, newTodo);
-      setInnerTodo(newTodo);
-    },
-    [innerTodo]
-  );
   const navigate = useNavigate();
   return (
     <>
-      <FormControlLabel
-        control={
-          <Checkbox
-            onChange={(e) => {
-              onChange(e.target.checked);
-            }}
-            checked={innerTodo.isDone}
-          />
-        }
-        label={innerTodo.name}
-      />
-      <Button onClick={() => navigate("/todos/" + todoItem.id)}>Open</Button>
+      <h1>{ innerTodo.title }</h1>
+      <h1>{ innerTodo.description }</h1>
+      <h1>{ innerTodo.dueDate }</h1>
       {/* <Link to={"/todos/" + todoItem.id}>Open</Link> */}
     </>
   );
