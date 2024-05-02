@@ -114,7 +114,7 @@ export const addCountryToExcludeTax = (
 };
 
 /**
- * sum price of include tax products only
+ * sum price of include tax products onlyone
  */
 export const sumPriceIncludeTax = (products: HomeworkProduct[]): number => {
   const sum = products.reduce((result, currentProduct) => {
