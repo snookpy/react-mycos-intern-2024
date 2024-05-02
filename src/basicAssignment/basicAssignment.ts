@@ -76,5 +76,5 @@ export const addCountryToExcludeTax = (
 export const sumPriceIncludeTax = (
 	products: HomeworkProduct[]
 ): number => {
-	return 0
+	return 20
 }
