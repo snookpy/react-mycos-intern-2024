@@ -31,7 +31,7 @@ export const addIsNonDecimalPrice = (
 ): NonDecimalProduct[] => {
   const productsWithNonDecimal: NonDecimalProduct[] = products.map(
     (product) => {
-      const isNonDecimal = product.price % 1 !== 0;
+      const isNonDecimal = product.price % 1 == 0;
       return {
         ...product,
         isNonDecimalPrice: isNonDecimal,

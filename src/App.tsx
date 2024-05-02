@@ -1,52 +1,3 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-// import {
-//   addIsNonDecimalPrice,
-//   //   addCountryToExcludeTax,
-//   homeworkProducts,
-//   //   priceOver50,
-// } from "./basicAssignment/basicAssignment";
-
-function App() {
-  const [count, setCount] = useState(0);
-
-  //console.log(sumPriceIncludeTax(homeworkProducts));
-  //console.log(addTenTaxToNonIncludeTaxProduct(homeworkProducts));
-  //console.log(productNameUppercase(homeworkProducts));
-  //console.log(addCountryToExcludeTax(homeworkProducts));
-  //console.log(priceOver50(homeworkProducts));
-  //console.log(addIsNonDecimalPrice(homeworkProducts));
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Mycos Frontend Internship 2024</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
-
-=======
 import { ThemeProvider } from "@mui/material";
 import { themeConfig } from "./config/themeConfig";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -96,5 +47,4 @@ function App() {
   );
 }
 
->>>>>>> upstream/basic-react
 export default App;
