@@ -31,9 +31,9 @@ export const addIsNonDecimalPrice = (
 ): NonDecimalProduct[] => {
 	const arrayWithDecimal = products.map((e) => {
 		if (e.price.toFixed() === e.price.toString()) {
-			return {...e, isNonDecimalPrice: false}
-		} else {
 			return {...e, isNonDecimalPrice: true}
+		} else {
+			return {...e, isNonDecimalPrice: false}
 		}
 	})
 	return arrayWithDecimal

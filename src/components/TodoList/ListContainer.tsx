@@ -4,20 +4,24 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { todoApi } from "../../api/TodoApi";
 import AddTodoDialog from "./NewTodoDialog";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../App";
+// import { ROUTES } from "../../App";
 export interface ITodo {
-  id?: string;
-  name: string;
-  isDone: boolean;
-  detail?: string;
+  id: string;
+  title: string;
+  description: string;
+  createDate: string;
+  updateDate: string;
+  dueDate: string;
+  tags?: null
 }
 
 const ListContainer = () => {
-  // let todos: ITodo[] = [];
-  // const todoList = async () => {
-  //   todos = (await todoApi.getTodos()).data;
-  // };
-  // todoList();
+  let todosFromApi: ITodo[] = [];
+  const todoList = async () => {
+    todosFromApi = (await todoApi.getTodos()).data;
+    setTodos(todosFromApi)
+  };
+  todoList();
 
   //use for keep the vairable value
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -57,7 +61,7 @@ const ListContainer = () => {
         <Grid container spacing={1} direction={"column"}>
           {todos.map((t) => {
             return (
-              <Grid key={"todo-" + t.name} item pl={2}>
+              <Grid key={"todo-" + t.title} item pl={2}>
                 <TodoItem todoItem={t} />
               </Grid>
             );
