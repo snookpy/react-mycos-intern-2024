@@ -29,7 +29,13 @@ export const homeworkProducts: HomeworkProduct[] = [
 export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
-	return []
+	const newaddisNonDecimalPrice = products.map(product => {
+		return {
+			...product,
+			isNonDecimalPrice : Number.isInteger(product.price)
+		};
+	});
+	return newaddisNonDecimalPrice
 }
 
 /**
@@ -38,7 +44,13 @@ export const addIsNonDecimalPrice = (
 export const productNameUppercase = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const newProductsname = products.map(product => {
+        return {
+            ...product,
+            name: product.name.toUpperCase()
+        };
+    });
+	return newProductsname;
 }
 
 /**
@@ -47,14 +59,29 @@ export const productNameUppercase = (
 export const addTenTaxToNonIncludeTaxProduct = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const taxRate = 0.1;
+    const newaddTenTaxTaxProduct = products.map(product => {
+        if (!product.isIncludeTax) 
+		{
+            return {
+                ...product,
+                price: product.price * (1 + taxRate)
+            };
+        } else {
+            return product;
+        }
+    });
+	return newaddTenTaxTaxProduct;
 }
 
 /**
  * return new array with products price over 50 only
  */
 export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
-	return products
+	const newpriceOver50 =  products.filter(product => {
+        return product.price > 50;
+    });
+	return newpriceOver50;
 }
 
 /**
@@ -67,7 +94,21 @@ export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
 export const addCountryToExcludeTax = (
 	products: HomeworkProduct[]
 ): ExtraHomeworkProduct[] => {
-	return products
+	const newaddCountryandDiscount = products.map(product => {
+		if (!product.isIncludeTax)
+		{
+			return {
+				...product,
+                country : 'china'
+			}
+		} else {
+			return {
+				...product,
+                discount: 0.10
+			}
+		}
+    });
+	return newaddCountryandDiscount;
 }
 
 /**
@@ -76,5 +117,11 @@ export const addCountryToExcludeTax = (
 export const sumPriceIncludeTax = (
 	products: HomeworkProduct[]
 ): number => {
-	return 0
+	const totalCost = products.reduce((total, curProduct) => {
+        if (curProduct.isIncludeTax) {
+            return total + curProduct.price;
+        }
+        return total;
+    }, 0);
+    return totalCost; 
 }
