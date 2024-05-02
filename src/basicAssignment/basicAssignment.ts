@@ -32,7 +32,7 @@ export const addIsNonDecimalPrice = (
   return [];
 };
 
-/** 2. เปลี่ยนชื่อเนม upper case
+/**
  * convert all product name to uppercase and return new array
  */
 export const productNameUppercase = (
