@@ -22,7 +22,7 @@ export const homeworkProducts: HomeworkProduct[] = [
 ];
 
 /**
- * Add field isNonDecimalPrice to all product and return new array of Products
+ * Add field isNonDecimalPrice to all product and return new array of Products ไพรท์เป็นเศษส่วน เพิ่มฟิล
  * example price is 120.0, isNonDecimalPrice is true
  * example price is 15.5, isNonDecimalPrice is false
  */
@@ -76,7 +76,7 @@ export const addCountryToExcludeTax = (
 };
 
 /**
- * sum price of include tax products only
+ * sum price of include tax products onlyone
  */
 export const sumPriceIncludeTax = (products: HomeworkProduct[]): number => {
   return 0;
