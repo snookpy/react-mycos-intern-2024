@@ -21,7 +21,7 @@ export const homeworkProducts: HomeworkProduct[] = [
   { price: 15.0, name: "Notebook Set", isIncludeTax: false },
 ];
 
-/** 1.
+/**
  * Add field isNonDecimalPrice to all product and return new array of Products ไพรท์เป็นเศษส่วน เพิ่มฟิล
  * example price is 120.0, isNonDecimalPrice is true
  * example price is 15.5, isNonDecimalPrice is false
@@ -47,20 +47,33 @@ export const productNameUppercase = (
   return upperProducts;
 };
 
-/** 3. เพอ่ม tag10%
+/**
  * add 10% tax to not include tax products only return with new product array
  */
 export const addTenTaxToNonIncludeTaxProduct = (
   products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-  return products;
+  const productsAddTax: HomeworkProduct[] = products.map((product) => {
+    if (!product.isIncludeTax) {
+      const priceAddTax = product.price * 1.1;
+      return {
+        ...product,
+        price: priceAddTax,
+      };
+    }
+    return product;
+  });
+  return productsAddTax;
 };
 
-/**4. เอาโปรดัก arr เกิน 50
+/**
  * return new array with products price over 50 only
  */
 export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
-  return products;
+  const productOver50: HomeworkProduct[] = products.filter(
+    (product) => product.price > 50
+  );
+  return productOver50;
 };
 
 /**
@@ -73,12 +86,34 @@ export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
 export const addCountryToExcludeTax = (
   products: HomeworkProduct[]
 ): ExtraHomeworkProduct[] => {
-  return products;
+  const updateCountryProducts: ExtraHomeworkProduct[] = products.map(
+    (product) => {
+      if (!product.isIncludeTax) {
+        return {
+          ...product,
+          country: "china",
+        };
+      } else {
+        return {
+          ...product,
+          discount: 0.1,
+        };
+      }
+    }
+  );
+  return updateCountryProducts;
 };
 
-/** รวมราคา include
+/**
  * sum price of include tax products only
  */
 export const sumPriceIncludeTax = (products: HomeworkProduct[]): number => {
-  return 0;
+  const sum = products.reduce((result, currentProduct) => {
+    if (currentProduct.isIncludeTax) {
+      result += currentProduct.price;
+    }
+    return result;
+  }, 0);
+
+  return sum;
 };
