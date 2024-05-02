@@ -29,7 +29,14 @@ export const homeworkProducts: HomeworkProduct[] = [
 export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
-	return []
+	const arrayWithDecimal = products.map((e) => {
+		if (e.price.toFixed() === e.price.toString()) {
+			return {...e, isNonDecimalPrice: false}
+		} else {
+			return {...e, isNonDecimalPrice: true}
+		}
+	})
+	return arrayWithDecimal
 }
 
 /**
@@ -38,7 +45,10 @@ export const addIsNonDecimalPrice = (
 export const productNameUppercase = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const productNameUpper: HomeworkProduct[] = products.map((e) => {
+		return {...e, name: e.name.toUpperCase()}
+	})
+	return productNameUpper
 }
 
 /**
@@ -47,14 +57,22 @@ export const productNameUppercase = (
 export const addTenTaxToNonIncludeTaxProduct = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	const arrayWithAddTax: HomeworkProduct[] = products.map((e) => {
+		if (e.isIncludeTax) {
+			return e
+		} else {
+			return {...e, price: e.price * 1.1}
+		}
+	})
+	return arrayWithAddTax
 }
 
 /**
  * return new array with products price over 50 only
  */
 export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
-	return products
+	const priceOver = products.filter(e => e.price > 50)
+	return priceOver
 }
 
 /**
@@ -67,7 +85,14 @@ export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
 export const addCountryToExcludeTax = (
 	products: HomeworkProduct[]
 ): ExtraHomeworkProduct[] => {
-	return products
+	const arrayWithCountryAndDiscount: ExtraHomeworkProduct[] = products.map((e) => {
+		if (e.isIncludeTax) {
+			return {...e, discount: 0.10}
+		} else {
+			return {...e, country: 'china'}
+		}
+	})
+	return arrayWithCountryAndDiscount
 }
 
 /**
@@ -76,5 +101,6 @@ export const addCountryToExcludeTax = (
 export const sumPriceIncludeTax = (
 	products: HomeworkProduct[]
 ): number => {
-	return 0
+	const sumPriceTax: number = products.reduce((total, currItam) => currItam.isIncludeTax ? total + currItam.price : total , 0)
+	return sumPriceTax
 }
