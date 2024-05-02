@@ -2,6 +2,14 @@ import { useState } from "react"
 import reactLogo from "./assets/react.svg"
 import viteLogo from "/vite.svg"
 import "./App.css"
+import { addCountryToExcludeTax, addIsNonDecimalPrice, addTenTaxToNonIncludeTaxProduct, homeworkProducts, priceOver50, productNameUppercase, sumPriceIncludeTax } from "./basicAssignment/basicAssignment"
+
+console.log(addIsNonDecimalPrice(homeworkProducts))
+console.log(productNameUppercase(homeworkProducts))
+console.log(addTenTaxToNonIncludeTaxProduct(homeworkProducts))
+console.log(priceOver50(homeworkProducts))
+console.log(addCountryToExcludeTax(homeworkProducts))
+console.log(sumPriceIncludeTax(homeworkProducts))
 
 function App() {
 	const [count, setCount] = useState(0)

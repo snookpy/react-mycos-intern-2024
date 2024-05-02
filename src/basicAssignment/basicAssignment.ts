@@ -29,7 +29,9 @@ export const homeworkProducts: HomeworkProduct[] = [
 export const addIsNonDecimalPrice = (
 	products: HomeworkProduct[]
 ): NonDecimalProduct[] => {
-	return []
+	const result: NonDecimalProduct[] = products.map((product) => 
+		product.price % 1 === 0 ? { ...product, isNonDecimalPrice: true } : { ...product, isNonDecimalPrice: false })
+	return result
 }
 
 /**
@@ -38,7 +40,7 @@ export const addIsNonDecimalPrice = (
 export const productNameUppercase = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	return products.map((product) => ({ ...product, name: product.name.toUpperCase() }))
 }
 
 /**
@@ -47,14 +49,14 @@ export const productNameUppercase = (
 export const addTenTaxToNonIncludeTaxProduct = (
 	products: HomeworkProduct[]
 ): HomeworkProduct[] => {
-	return products
+	return products.map((product) => product.isIncludeTax ? product : { ...product, price: product.price * 1.1 })
 }
 
 /**
  * return new array with products price over 50 only
  */
 export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
-	return products
+	return products.filter((product) => product.price > 50)
 }
 
 /**
@@ -67,7 +69,7 @@ export const priceOver50 = (products: HomeworkProduct[]): HomeworkProduct[] => {
 export const addCountryToExcludeTax = (
 	products: HomeworkProduct[]
 ): ExtraHomeworkProduct[] => {
-	return products
+	return products.map((product) => product.isIncludeTax ? { ...product, discount: 0.10 } : { ...product, country: "china" })
 }
 
 /**
@@ -76,5 +78,5 @@ export const addCountryToExcludeTax = (
 export const sumPriceIncludeTax = (
 	products: HomeworkProduct[]
 ): number => {
-	return 0
+	return products.reduce((acc, product) => product.isIncludeTax ? acc + product.price : acc, 0)
 }
