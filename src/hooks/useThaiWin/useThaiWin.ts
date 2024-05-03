@@ -34,7 +34,6 @@ const useThaiWin = () => {
 	}, [])
 
 	return [isLogin, handleLogin, handleLogout] as const;
-
 }
 
 export default useThaiWin
