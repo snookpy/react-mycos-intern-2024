@@ -4,7 +4,8 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { todoApi } from "../../api/TodoApi";
 import AddTodoDialog from "./NewTodoDialog";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../App";
+import "./ListContainer.css";
+// import { ROUTES } from "../../App";
 export interface ITodo {
   id?: string;
   name: string;
@@ -37,38 +38,64 @@ const ListContainer = () => {
 
   return (
     <>
-      <Box px={4}>
-        <Grid container justifyContent={"space-between"} spacing={2}>
-          <Grid item md={6} xs={12}>
-            <Typography variant="h4">Todo List</Typography>
+      <div className="body">
+        <Box px={4}>
+          <Grid container justifyContent={"space-between"} spacing={2}>
+            <Grid item md={6} xs={12}>
+              <Typography variant="h4">TODOS</Typography>
+            </Grid>
           </Grid>
-          <Grid item md={"auto"} xs={12}>
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigate("/todos/new");
-              }}
-              fullWidth={true}
-            >
-              + Add List
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container spacing={1} direction={"column"}>
-          {todos.map((t) => {
-            return (
-              <Grid key={"todo-" + t.name} item pl={2}>
-                <TodoItem todoItem={t} />
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-input"
+            />
+            <button type="button" className="search-button"></button>
+          </div>
+
+          <div id="boxTodos">
+            <div className="boxShowTodos">
+              <div>
+                <h1>Clean out kitchen</h1>
+                <p>Table & Floor</p>
+                <p>25/05/2024</p>
+              </div>
+            </div>
+            <Grid container spacing={1} direction={"column"}>
+              {todos.map((t) => {
+                return (
+                  <Grid key={"todo-" + t.name} item pl={2}>
+                    <TodoItem todoItem={t} />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          </div>
+
+          <div id="create-button">
+            <Grid container justifyContent={"space-between"} spacing={2}>
+              <Grid item md={6} xs={12}></Grid>
+              <Grid item md={"auto"} xs={12}>
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    navigate("/todos/new");
+                  }}
+                  fullWidth={true}
+                >
+                  CREATE
+                </Button>
               </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-      <AddTodoDialog
-        open={openAddToDoDialog}
-        onClose={() => setOpenAddToDoDialog(false)}
-        onSuccess={getTodos}
-      />
+            </Grid>
+          </div>
+        </Box>
+        <AddTodoDialog
+          open={openAddToDoDialog}
+          onClose={() => setOpenAddToDoDialog(false)}
+          onSuccess={getTodos}
+        />
+      </div>
     </>
   );
 };
