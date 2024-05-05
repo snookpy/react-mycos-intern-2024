@@ -13,15 +13,15 @@ const UpsertTodoItem = () => {
   const onSave = async () => {
     if (!todo?.id && !todo) {
       await todoApi.addTodo({
-        name: todoName,
+        title: todoName,
         isDone: false,
-        detail: todoDetail,
+        description: todoDetail,
       });
     } else {
       await todoApi.updateTodo(todo.id!, {
         ...todo,
-        detail: todoDetail,
-        name: todoName,
+        // description: todoDetail,
+        // Title: todoName,
       });
     }
     navigate("/todos");
@@ -29,7 +29,7 @@ const UpsertTodoItem = () => {
   const loadTodo = useCallback(async (id: string) => {
     const res = await todoApi.getTodo(id);
     setTodo(res.data);
-    setTodoName(res.data.name ?? "");
+    setTodoName(res.data.description ?? "");
     setTodoDetail("");
   }, []);
 

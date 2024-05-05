@@ -23,9 +23,10 @@ const AddTodoDialog = ({
   const [todoDetail, setTodoDetail] = useState("");
   const onSave = async () => {
     await todoApi.addTodo({
-      name: todoName,
+      title: todoName,
       isDone: false,
-      detail: todoDetail,
+      description: todoDetail ?? null,
+      //dueDate:
     });
     onSuccess?.();
     onClose();

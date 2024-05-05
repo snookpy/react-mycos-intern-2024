@@ -8,9 +8,13 @@ import "./ListContainer.css";
 // import { ROUTES } from "../../App";
 export interface ITodo {
   id?: string;
-  name: string;
+  title: string;
   isDone: boolean;
-  detail?: string;
+  description?: string;
+  createDate?: Date;
+  updateDate?: Date;
+  dueDate?: Date;
+  tags?: any[];
 }
 
 const ListContainer = () => {
@@ -56,21 +60,16 @@ const ListContainer = () => {
 
           <div id="boxTodos">
             <div className="boxShowTodos">
-              <div>
-                <h1>Clean out kitchen</h1>
-                <p>Table & Floor</p>
-                <p>25/05/2024</p>
-              </div>
+              <Grid container spacing={1} direction={"column"}>
+                {todos.map((t) => {
+                  return (
+                    <Grid key={"todo-" + t.title} item pl={2}>
+                      <TodoItem todoItem={t} />
+                    </Grid>
+                  );
+                })}
+              </Grid>
             </div>
-            <Grid container spacing={1} direction={"column"}>
-              {todos.map((t) => {
-                return (
-                  <Grid key={"todo-" + t.name} item pl={2}>
-                    <TodoItem todoItem={t} />
-                  </Grid>
-                );
-              })}
-            </Grid>
           </div>
 
           <div id="create-button">
