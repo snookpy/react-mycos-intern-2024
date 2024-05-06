@@ -20,7 +20,8 @@ This project created by Vite contains React + TypeScript + Vite
 - React State with API
 - [React Hook](./docs/ReactHook.md)
 - [Custom Hook](./docs/CustomHook.md)
-- Layout and Design pattern (example: Container Pattern)
+- [Layout and Design pattern (example: Container Pattern)](./docs/Design%20Pattern.md)
+- [Context](./docs/useContext.md)
 
 ## Up project
 ```
