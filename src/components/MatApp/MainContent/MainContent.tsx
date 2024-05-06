@@ -1,9 +1,12 @@
 import { Container } from "@mui/material"
+import TodoForm from "../../TodoForm/TodoForm"
 
 const MainContent = () => {
 	return (
 		<main>
-			<Container>main</Container>
+			<Container>
+				<TodoForm />
+			</Container>
 		</main>
 	)
 }
