@@ -20,8 +20,8 @@ const UpsertTodoItem = () => {
     } else {
       await todoApi.updateTodo(todo.id!, {
         ...todo,
-        // description: todoDetail,
-        // Title: todoName,
+        description: todoDetail,
+        title: todoName,
       });
     }
     navigate("/todos");
@@ -40,11 +40,11 @@ const UpsertTodoItem = () => {
   }, [id, loadTodo]);
 
   return (
-    <div>
+    <div className="body">
       <Grid container spacing={1} direction={"column"}>
         <Grid item>
           <TextField
-            label="Name"
+            label="Title"
             variant="outlined"
             value={todoName}
             onChange={(e) => {
@@ -54,7 +54,7 @@ const UpsertTodoItem = () => {
         </Grid>
         <Grid item>
           <TextField
-            label="Detail"
+            label="description"
             variant="outlined"
             value={todoDetail}
             onChange={(e) => {
@@ -65,7 +65,7 @@ const UpsertTodoItem = () => {
       </Grid>
       <Grid container spacing={2} justifyContent={"end"} pt={3}>
         <Grid item>
-          <Button onClick={onSave}>Save</Button>
+          <Button onClick={onSave}>Confirm</Button>
         </Grid>
         <Grid item>
           <Button onClick={() => navigate("/todos")} color="secondary">

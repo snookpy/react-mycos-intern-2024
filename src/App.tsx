@@ -5,6 +5,7 @@ import Profile from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import PageLayout from "./pages/PageLayout";
 import TodoUpsertPage from "./pages/TodoUpsertPage";
+import "./App.css";
 
 interface IROUTE {
   path: string;

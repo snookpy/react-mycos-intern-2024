@@ -7,7 +7,7 @@ const PageLayout = () => {
     <div style={{ margin: -8 }}>
       <AppBar style={{ top: 0, left: 0, right: 0 }} position="static">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          {/* <Toolbar disableGutters>
             <Typography
               noWrap
               component="a"
@@ -29,7 +29,7 @@ const PageLayout = () => {
             >
               Profile
             </Typography>
-          </Toolbar>
+          </Toolbar> */}
         </Container>
       </AppBar>
       <Box pt={3}>

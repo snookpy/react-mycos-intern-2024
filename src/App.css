@@ -1,8 +1,20 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  padding-inline: 20px;
+}
+
+#BarTodos {
+  background-image: url("./assets/img/LogoVer2.png");
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: right;
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 50px;
 }
 
 .logo {
@@ -44,5 +56,7 @@
 }
 
 body {
-  background-color: rgb(0, 0, 0);
+  background-color: #fff8db;
+  background-image: url("./assets/img/SmallBG.svg");
+  background-size: cover;
 }
