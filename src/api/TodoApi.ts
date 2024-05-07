@@ -8,5 +8,5 @@ export const todoApi = {
   getTodo: (id: string) => axios.get<ITodo>(base_url + `/${id}`),
   removedTodo: (id: string) => axios.delete<ITodo>(base_url + `/${id}`),
   searchTodo: (name: string) =>
-    axios.get<ITodo[]>(base_url + `/filter`, { params: name }),
+    axios.get<ITodo[]>(base_url + `/filter`, { params: { name } }),
 };

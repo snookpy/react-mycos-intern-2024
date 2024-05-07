@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { todoApi } from "../../api/TodoApi";
 import { ITodo } from "./ListContainer";
+import dayjs, { Dayjs } from "dayjs";
 
 const UpsertTodoItem = () => {
   const { id } = useParams();
@@ -10,6 +11,9 @@ const UpsertTodoItem = () => {
   const [todo, setTodo] = useState<ITodo | undefined>();
   const [todoName, setTodoName] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
+  const [todoDueDate, setTodoDueDate] = React.useState<Dayjs | null>(
+    dayjs(null)
+  );
   const onSave = async () => {
     if (!todo?.id && !todo) {
       await todoApi.addTodo({
@@ -29,8 +33,9 @@ const UpsertTodoItem = () => {
   const loadTodo = useCallback(async (id: string) => {
     const res = await todoApi.getTodo(id);
     setTodo(res.data);
-    setTodoName(res.data.description ?? "");
-    setTodoDetail("");
+    setTodoName(res.data.title ?? "");
+    setTodoDetail(res.data.description ?? "");
+    // setTodoDueDate(res.data.dueDate ?? null);
   }, []);
 
   useEffect(() => {

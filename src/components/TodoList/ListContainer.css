@@ -1,5 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+:root {
+  font-family: "Open Sans", sans-serif;
+}
+
 #boxTodos {
-  background-color: #fffffb;
+  background-color: #ffe1a8;
   border-radius: 30px;
   padding-inline: 20px;
   margin-bottom: 10px;
@@ -10,15 +15,16 @@
   border: 1px solid #ff7403;
 }
 
-#create-button {
-  margin-top: 25px;
+.showTodos {
+  overflow: auto;
+  max-height: 100%;
+  background-color: #fffffb;
+  padding-inline: 40px;
+  border-radius: 30px;
+  margin-top: 15px;
 }
 
-.boxShowTodos {
-  background-color: #ffe1a8;
-  padding: 60px;
-  border-radius: 35px;
-  /* margin-left: -200px;
-    margin-right: -100px;
-    margin-top: -300px; */
+.showTodos::-webkit-scrollbar {
+  width: auto;
+  height: 400px;
 }

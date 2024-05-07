@@ -16,7 +16,6 @@ import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/th";
 
 const date = dayjs(new Date()).locale("th");
-
 const AddTodoDialog = ({
   open,
   onClose,
@@ -93,7 +92,14 @@ const AddTodoDialog = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onSave}>CONFIRM</Button>
+          <Button
+            onClick={() => {
+              onSave();
+              onClose();
+            }}
+          >
+            CONFIRM
+          </Button>
           <Button onClick={onClose} color="secondary">
             Cancel
           </Button>
