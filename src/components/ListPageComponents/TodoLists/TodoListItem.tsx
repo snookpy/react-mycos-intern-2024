@@ -10,8 +10,7 @@ import { ITodo } from "../../../api/todoApi"
 import useToggleTodoStatus from "./useToggleTodoStatus"
 import { FetchStatus } from "../../../models/FetchStatus"
 import SecondaryTodoListButton from "./SecondaryTodoListButton"
-import { useContext } from "react"
-import { TodoContext } from "../../TodoContext"
+import { useTodoContext } from "../../TodoContext"
 
 export type TodoListItemProps = {
 	todo: ITodo
@@ -22,7 +21,8 @@ const TodoListItem = ({ todo }: TodoListItemProps) => {
 
     const {
         fetchTodoAfterToggle: onToggleSuccess
-    } = useContext(TodoContext)
+    } = useTodoContext()
+
 	const handleToggleTodo = async (id: string) => {
 		try {
 			await toggleAPI(id, onToggleSuccess)
