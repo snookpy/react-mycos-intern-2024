@@ -666,3 +666,97 @@ describe("useFetchTodo", () => {
 	})
 })
 ```
+
+### Test Component by mock Hook
+Sometime we want to test component but component have to used complicated hook inside, a way just mock the hook
+
+Example fetchTodo to List
+```javascript
+// TodoList.tsx
+import useFetchTodo from "../../hooks/useFetchTodo/useFetchTodo"
+
+const TodoList = () => {
+	const { isLoading, todos } = useFetchTodo()
+
+	return (
+		<>
+			{isLoading ? (
+				<p>Loading...</p>
+			) : (
+				<ul>
+					{todos.map((todo) => (
+						<li key={todo.id}>{todo.title}</li>
+					))}
+				</ul>
+			)}
+		</>
+	)
+}
+
+export default TodoList
+
+```
+Mocking with spyOn the useFetchTodo hook also add tests
+```javascript
+// TodoList.test.tsx
+
+import { render, screen } from "@testing-library/react"
+import TodoList from "./TodoList"
+import * as useFetchTodos from "../../hooks/useFetchTodo/useFetchTodo"
+
+describe("TodoList", () => {
+    test("should show loading when it is loading", () => {
+        // Arrange
+        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+        useFetchTodoSpy.mockReturnValue({
+            isLoading: true,
+            todos: [],
+        })
+        render(<TodoList />)
+
+        // Act & Assert
+        expect(screen.getByText("Loading...")).toBeInTheDocument()
+
+        // Clean
+        useFetchTodoSpy.mockRestore()
+    })
+
+    test("should show list empty when fetch empty todos", () => {
+        // Arrange
+        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+        useFetchTodoSpy.mockReturnValue({
+            isLoading: false,
+            todos: [],
+        })
+        render(<TodoList />)
+
+        // Act & Assert
+        expect(screen.getByRole('list')).toBeInTheDocument()
+        expect(screen.queryAllByRole('listitem')).toHaveLength(0)
+    })
+
+    test("should show list with 2 todo when fetched 2 todos", () => {
+        // Arrange
+        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+        useFetchTodoSpy.mockReturnValue({
+            isLoading: false,
+            todos: [{
+                id: "1",
+                title: "Todo 1",
+            },
+            {
+                id: "2",
+                title: "Buy Beer",
+            }],
+        })
+        render(<TodoList />)
+
+        // Act & Assert
+        expect(screen.getByRole('list')).toBeInTheDocument()
+        const allItems = screen.queryAllByRole('listitem')
+        expect(allItems).toHaveLength(2)
+        expect(allItems[0]).toHaveTextContent("Todo 1")
+        expect(allItems[1]).toHaveTextContent("Buy Beer")
+    })
+})
+```
