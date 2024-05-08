@@ -1,9 +1,16 @@
 import { Container } from "@mui/material"
 
-const MainContent = () => {
+type MainContentProps = {
+	children: React.ReactNode
+}
+const MainContent = ({ children }: MainContentProps) => {
 	return (
 		<main>
-			<Container>main</Container>
+			<Container sx={{
+				mt: 2
+			}}>
+				{children}
+			</Container>
 		</main>
 	)
 }
