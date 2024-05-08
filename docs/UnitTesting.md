@@ -6,22 +6,22 @@ Ensure our component/function/hooks working correctly also it can throw error or
 
 Wording in unit-testing field, may have another depends on Programming Language/ Framework etc...
 
-Test framework (we use @testing-library/react)-> contain tools,helper for testing a component/function
+**Test framework** (we use @testing-library/react)-> contain tools,helper for testing a component/function
 
-Test Runner (we use vitest) -> Can compile Test, build test like complier in programming language
+**Test Runner** (we use vitest) -> Can compile Test, build test like complier in programming language
 
-Test Case -> every case situation in function/component/class other...
+**Test Case** -> every case situation in function/component/class other...
 
-Test Doubles -> Simulate/Mock dependency of focus test which not call the real method.
+**Test Doubles** -> Simulate/Mock dependency of focus test which not call the real method.
 
-Coverage -> measure does implemented test reach over covering code/condition to percentage
+**Coverage** -> measure does implemented test reach over covering code/condition to percentage
 
-File name it depends Test Runner or Config, like we should name extension with `.test.ts` or `.spec.ts` .
+**File name** it depends Test Runner or Config, like we should name extension with `.test.ts` or `.spec.ts` .
 Other all tests stored in folder `__tests__` etc.
 
 unit-testing in React, contains scope(describe) and test case(it(""), or test(""))
 
-First the Scope, group multiple relate test cases, scope can be nested.
+**Scope** -> group multiple relate test cases, scope can be nested.
 
 ```javascript
 describe("useThaiWin", () => {
