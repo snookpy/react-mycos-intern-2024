@@ -1,7 +1,9 @@
 # Unit Testing
+
 Ensure our component/function/hooks working correctly also it can throw error or give us feedback when it was changed.
 
 ## Keywords
+
 Wording in unit-testing field, may have another depends on Programming Language/ Framework etc...
 
 Test framework (we use @testing-library/react)-> contain tools,helper for testing a component/function
@@ -37,6 +39,7 @@ describe("useThaiWin", () => {
 ```
 
 ## Test Case
+
 Good unit-testing should be;
 
 1.  Each test is solid separately
@@ -482,8 +485,9 @@ describe("ContentLoaded", () => {
 })
 ```
 
-### debug UI 
-While implementing test use  `screen.debug()` after render a component
+### debug UI
+
+While implementing test use `screen.debug()` after render a component
 
 ```javascript
 import { render, screen } from "@testing-library/react"
@@ -492,9 +496,11 @@ screen.debug()
 ```
 
 ### Query Element
+
 React testing library has api for getting or querying element while we write unit-testing
 
 #### Single Elements
+
 getBy...: Returns the matching node for a query, and throw a descriptive error if no elements match or if more than one match is found.
 
 queryBy...: Returns the matching node for a query, and return null if no elements match. This is useful for asserting an element that is not present. Throws an error if more than one match is found.
@@ -502,11 +508,161 @@ queryBy...: Returns the matching node for a query, and return null if no element
 findBy...: Returns a Promise which resolves when an element is found which matches the given query. The promise is rejected if no element is found or if more than one element is found after a default timeout of 1000ms.
 
 #### Multiple Elements
+
 getAllBy...: Returns an array of all matching nodes for a query, and throws an error if no elements match.
 
 queryAllBy...: Returns an array of all matching nodes for a query, and return an empty array ([]) if no elements match.
 
 findAllBy...: Returns a promise which resolves to an array of elements when any elements are found which match the given query. The promise is rejected if no elements are found after a default timeout of 1000ms.
-findBy methods are a combination of getBy* queries and waitFor. They accept the waitFor options as the last argument (i.e. await screen.findByText('text', queryOptions, waitForOptions))
+findBy methods are a combination of getBy\* queries and waitFor. They accept the waitFor options as the last argument (i.e. await screen.findByText('text', queryOptions, waitForOptions))
 
 Read more API: https://testing-library.com/docs/react-testing-library/intro
+
+## Hook Test
+
+We can test the hook too, hook is the best way to separate logic out from UI that why we can test with isolation from UI
+
+### Test Normal Hook
+
+The '@testing-library/react' package provide API `renderHook` for us to be able to write test for our hooks.
+
+Example we have useSearchTodo.
+
+```javascript
+// useSearchTodo.ts
+import { useState, useMemo } from "react"
+
+const useSearchTodo = (todos: ITodo[]) => {
+	const [searchTerm, setSearchTerm] = useState("")
+	const filteredTodos = useMemo(
+		() =>
+			todos.filter((todo) =>
+				todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+			),
+		[todos, searchTerm]
+	)
+
+	return {
+		searchTerm,
+		setSearchTerm,
+		filteredTodos,
+	}
+}
+
+export default useSearchTodo
+```
+
+Good start with when initial hook scenario
+
+```javascript
+// useSearchTodo.test.ts
+import { renderHook } from "@testing-library/react"
+import useSearchTodo from "./useSearchTodo"
+
+describe("useSearchTodo", () => {
+	test("when initial, return a default search term and original todos", () => {
+		// Arrange
+		const todos = [{ title: "Buy Stellar Blade game", completed: false }]
+		const { result } = renderHook(() => useSearchTodo(todos))
+
+		// Act & Assert
+		expect(result.current.searchTerm).toBe("")
+		expect(result.current.filteredTodos).toEqual(todos)
+	})
+})
+```
+
+`RenderHook` return many Object, one for this case it return `result` which we destructing on above, and all returned from hook it contain at `current` of `result` object or `result.current`
+
+add another test-case, we want to test set a search term
+we want to re-render hook since hook state it-self changed, we can use `act` API from ReactTesting Library
+
+```javascript
+...
+test('when search with `Buy` should return `Buy Stellar Blade game` only', () => {
+		// Arrange
+        const todos = [
+            { title: 'Buy Stellar Blade game', completed: false },
+            { title: 'Finish the Task 339', completed: false }
+        ]
+        const { result } = renderHook(() => useSearchTodo(todos))
+
+		// Act
+        act(() => {
+            result.current.setSearchTerm('Buy')
+        })
+
+		// Assert
+        expect(result.current.searchTerm).toBe('Buy')
+        expect(result.current.filteredTodos).toEqual([{ title: 'Buy Stellar Blade game', completed: false }])
+})
+```
+
+### Test Async Hook
+
+example test custom hook that get a data from api
+
+```javascript
+// useFetchTodo.ts
+import { useEffect, useState } from "react"
+import { fetchTodoUser } from "../api/weWinApi"
+
+const useFetchTodo = () => {
+	const [todos, setTodos] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
+
+	const fetchTodo = async () => {
+		try {
+			setIsLoading(true)
+			const results = await fetchTodoUser()
+
+			setTodos(results)
+		} catch (err) {
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	useEffect(() => {
+		fetchTodo()
+	}, [])
+
+	return { todos, isLoading }
+}
+
+export default useFetchTodo
+
+```
+
+Testing Library provide waitFor to handle async
+also, we mock fetchTodo with vi.spyOn from `vitest` since unit-testing we don't want to fetch a real one
+
+```javascript
+import { renderHook, waitFor } from "@testing-library/react"
+import useFetchTodo from "./useFetchTodo"
+import * as api from "../api/weWinApi"
+
+describe("useFetchTodo", () => {
+	test("when init should called once fetch todo api and return todos, isLoading", async () => {
+		// Arrange
+		const spyTodoApi = vi.spyOn(api, "fetchTodoUser").mockResolvedValue([
+			{
+				title: "Buy Stellar Blade game",
+				completed: true,
+			},
+		])
+
+		const { result } = renderHook(() => useFetchTodo())
+
+		// Act & Assert
+		await waitFor(() => {
+			expect(result.current.todos).toEqual([])
+			expect(result.current.isLoading).toEqual(false)
+		})
+		expect(spyTodoApi).toBeCalledTimes(1)
+
+		// Reset
+		spyTodoApi.mockRestore()
+	})
+})
+```

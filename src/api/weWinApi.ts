@@ -1,13 +1,25 @@
-export  const enterThaiWin = () => {
-    return true
+export const enterThaiWin = () => {
+	return true
 }
 
 export const exitThaiWin = () => {
-    return true
+	return true
 }
 
-// export const ffffff = async () => {
-//     return await fetch("https://jsonplaceholder.typicode.com/users/1").then((res) => {
-// 			console.log("res: ", res)
-// 		})
-// }
+function sleep(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+export const fetchTodoUser = async () => {
+	await sleep(5000)
+	return [
+		{
+			title: "Buy Stellar Blade game",
+			completed: false,
+		},
+		{
+			title: "teach unit-testing with vitest",
+			completed: false,
+		},
+	]
+}
