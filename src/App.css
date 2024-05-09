@@ -69,5 +69,6 @@ body {
   background-color: #fff8db;
   background-image: url("./assets/img/SmallBG.svg");
   background-size: cover;
+  background-position-y: center;
   overflow: hidden;
 }

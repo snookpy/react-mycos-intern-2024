@@ -34,7 +34,7 @@ const AddTodoDialog = ({
   const onSave = async () => {
     await todoApi.addTodo({
       title: todoName,
-      isDone: false,
+      completed: false,
       description: todoDetail ?? null,
       dueDate: todoDueDate ?? null,
     });

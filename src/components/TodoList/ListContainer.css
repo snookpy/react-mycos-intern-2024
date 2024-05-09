@@ -4,15 +4,15 @@
 }
 
 #boxTodos {
-  background-color: #ffe1a8;
   border-radius: 30px;
-  padding-inline: 20px;
+  padding-left: 20px;
+  padding-right: -5px;
   margin-bottom: 10px;
 }
 
 .search-button:hover {
-  background-color: #ff7403;
-  border: 1px solid #ff7403;
+  background-color: #ffa500;
+  border: 1px solid #ffa500;
 }
 
 .showTodos {
@@ -20,11 +20,30 @@
   max-height: 100%;
   background-color: #fffffb;
   padding-inline: 40px;
-  border-radius: 30px;
+  /* border-radius: 30px; */
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
   margin-top: 15px;
 }
 
+/* สกอร์ */
+
 .showTodos::-webkit-scrollbar {
+  width: 15px;
+}
+
+.showTodos::-webkit-scrollbar-track {
+  background: #ffa50033;
+  border-radius: 40px;
+}
+
+.showTodos::-webkit-scrollbar-thumb {
+  background: #c48201;
+  border-radius: 40px;
+  box-shadow: 0 0 5px #6d470067;
+}
+
+/* .showTodos::-webkit-scrollbar {
   width: auto;
   height: 400px;
-}
+} */

@@ -12,12 +12,12 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
 export interface ITodo {
   id?: string;
-  title?: string;
-  isDone: boolean;
+  title: string;
   description?: string;
   createDate?: Date;
   updateDate?: Date;
-  dueDate?: Date | Dayjs | null;
+  dueDate?: Date | any;
+  completed?: boolean;
   tags?: any[];
 }
 
@@ -25,11 +25,13 @@ const ListContainer = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [fliterTodo, setfliterTodo] = useState<ITodo[]>([]);
   const [openAddToDoDialog, setOpenAddToDoDialog] = useState(false);
+
   const getTodos = useCallback(async () => {
     const result = await todoApi.getTodos();
     setTodos(result.data);
     setfliterTodo(result.data);
   }, []);
+
   const searchTodos = async (title: any) => {
     if (!title) {
       setfliterTodo(todos);
@@ -42,23 +44,35 @@ const ListContainer = () => {
   const deleteTodo = async (id?: string) => {
     if (!id) return;
     await todoApi.removedTodo(id);
+    getTodos();
+  };
+
+  const onCompleted = async (newTodo: ITodo, value: boolean) => {
+    if (newTodo.id) await todoApi.updateTodo(newTodo.id, newTodo);
+    getTodos();
   };
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getTodos();
-  }, [getTodos, deleteTodo]);
+  }, []);
 
   return (
     <>
-      <Box px={4} sx={{ height: "420px" }}>
+      <Box px={6} sx={{ height: "420px" }}>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>
             <FormatListBulletedIcon sx={{ fontSize: 50, color: "#ff7403" }} />
           </Grid>
           <Grid item>
-            <Typography variant="h4">TODOS</Typography>
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              sx={{ color: "#1E1200" }}
+            >
+              TODOS
+            </Typography>
           </Grid>
         </Grid>
 
@@ -75,6 +89,9 @@ const ListContainer = () => {
               variant="outlined"
               className="searchInput"
               sx={{
+                "& .MuiInputLabel-root": {
+                  color: "#C2A468",
+                },
                 "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                   borderColor: "#C48201",
                   borderRadius: "30px",
@@ -93,7 +110,11 @@ const ListContainer = () => {
               marginTop: "5px",
             }}
           >
-            <TodoList todos={fliterTodo} onDeleteTodo={deleteTodo} />
+            <TodoList
+              todos={fliterTodo}
+              onDeleteTodo={deleteTodo}
+              onCompleteTodo={onCompleted}
+            />
           </Box>
         </div>
 
@@ -103,7 +124,7 @@ const ListContainer = () => {
             <Grid item md={"auto"} xs={12} mt={2}>
               <Button
                 variant="contained"
-                onClick={() => setOpenAddToDoDialog(true)}
+                onClick={() => navigate("/todos/new")}
                 fullWidth={true}
               >
                 CREATE
@@ -112,11 +133,6 @@ const ListContainer = () => {
           </Grid>
         </div>
       </Box>
-      <AddTodoDialog
-        open={openAddToDoDialog}
-        onClose={() => setOpenAddToDoDialog(false)}
-        onSuccess={getTodos}
-      />
     </>
   );
 };
