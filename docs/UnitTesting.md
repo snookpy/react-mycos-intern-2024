@@ -70,7 +70,7 @@ test("calMultiply when a is 5 and b is 6 should be 30", () => {
 	const expectResult = 30
 
 	// Act
-	const result = calMultiply(5, 6)
+	const result = calMultiply(a, b)
 
 	// Assert
 	expect(result).toEqual(expectResult)
@@ -139,7 +139,7 @@ test("divine when b = 0 should got error `b cannot be 0`", () => {
 	const expectResult = "b cannot be 0"
 
 	// Act & Assert
-	expect(() => calculator(5, 0, true)).toThrowError(expectResult)
+	expect(() => calculator(a, b, true)).toThrowError(expectResult)
 })
 ```
 
@@ -199,7 +199,7 @@ describe("calculator", () => {
 		const expectResult = "b cannot be 0"
 
 		// Act & Assert
-		expect(() => calculator(5, 0, "divine")).toThrowError(expectResult)
+		expect(() => calculator(a, b, "divine")).toThrowError(expectResult)
 	})
 
 	test("plus when b = 11, a = 22 should be 33", () => {
