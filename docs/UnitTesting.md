@@ -485,6 +485,75 @@ describe("ContentLoaded", () => {
 })
 ```
 
+### Test Fire Event
+
+in UI obviously we have do some event to HTML element like click a button
+
+example click to change view on Component
+
+```javascript
+// ContentLoaded.tsx
+const ContentLoaded = () => {
+	const [isFinished, setIsFinished] = useState(true)
+	const onClickButton = () => {
+		setIsFinished(prev => !prev)
+	}
+
+	return (
+		<div>
+			<button onClick={onClickButton}>toggle</button>
+			{isFinished ? <h1>Content Finished</h1> : <h1>Content Loading</h1>}
+			<input >
+		</div>
+	)
+}
+```
+
+For testing we will use `fireEvent` API from `@testing-library/react`
+
+```javascript
+
+...
+test("first click toggle should show content loading", () => {
+	// Arrange
+	render(<ContentLoaded />)
+
+	// Act
+	const button = screen.getByRole("button")
+	fireEvent.click(button)
+
+	// Assert
+	expect(screen.getByText("Content Loading")).toBeInTheDocument()
+})
+```
+
+If we have input, mostly input will fire 'change' event
+
+```javascript
+// ContentLoaded.tsx
+...
+<label htmlFor="username-input">Username</label>
+<input id="username-input" />
+
+
+// test
+test("input `buy something` the input should have value", async () => {
+        // Arrange
+        const valueExpect = "buy something"
+        render(<ContentLoaded />)
+
+        // Act
+        const inputNode = screen.getByLabelText('Username')
+
+
+        fireEvent.change(inputNode, { target : { value: valueExpect } })
+
+        // Assert
+        expect(inputNode.value).toEqual(valueExpect)
+    })
+
+```
+
 ### debug UI
 
 While implementing test use `screen.debug()` after render a component
@@ -495,12 +564,73 @@ import { render, screen } from "@testing-library/react"
 screen.debug()
 ```
 
-### Query Element
+### Test Async UI
 
+Example we delay the change Content Loading a Component with `setTimeout` How do we test this?
+a way method, vitest provide `vi.useFakeTimers()` for faking time and we should clean up with `vi.useRealTimers()` since we wait 5000 ms, so we fake it pass 5000 ms in `act`, act from `@testing-library/react` used for detected latest change of the component.
+
+```javascript
+const ContentLoaded = () => {
+	const [isFinished, setIsFinished] = useState(true)
+
+	const onClickButton = () => {
+		setTimeout(() => {
+			setIsFinished((prev) => !prev)
+		}, 5000)
+	}
+
+	return (
+		<div>
+			<button onClick={onClickButton}>toggle</button>
+			{isFinished ? <h1>Content Finished</h1> : <h1>Content Loading</h1>}
+		</div>
+	)
+}
+
+// test
+test("first click toggle after time fly 3000 ms, should still show `content Finished`", () => {
+	// Arrange
+	vi.useFakeTimers()
+	render(<ContentLoaded />)
+
+	// Act
+	const button = screen.getByRole("button")
+	fireEvent.click(button)
+	act(() => {
+		vi.advanceTimersByTime(3000)
+	})
+
+	// Assert
+	expect(screen.getByText("Content Finished")).toBeInTheDocument()
+
+	// Clean up
+	vi.useRealTimers()
+})
+
+test("first click toggle after time fly 5000 ms, should show `content loading`", () => {
+	// Arrange
+	vi.useFakeTimers()
+	render(<ContentLoaded />)
+
+	// Act
+	const button = screen.getByRole("button")
+	fireEvent.click(button)
+	act(() => {
+		vi.advanceTimersByTime(5000)
+	})
+
+	// Assert
+	expect(screen.getByText("Content Loading")).toBeInTheDocument()
+
+	// Clean up
+	vi.useRealTimers()
+})
+```
+
+### Query Element
 React testing library has api for getting or querying element while we write unit-testing
 
 #### Single Elements
-
 getBy...: Returns the matching node for a query, and throw a descriptive error if no elements match or if more than one match is found.
 
 queryBy...: Returns the matching node for a query, and return null if no elements match. This is useful for asserting an element that is not present. Throws an error if more than one match is found.
@@ -508,7 +638,6 @@ queryBy...: Returns the matching node for a query, and return null if no element
 findBy...: Returns a Promise which resolves when an element is found which matches the given query. The promise is rejected if no element is found or if more than one element is found after a default timeout of 1000ms.
 
 #### Multiple Elements
-
 getAllBy...: Returns an array of all matching nodes for a query, and throws an error if no elements match.
 
 queryAllBy...: Returns an array of all matching nodes for a query, and return an empty array ([]) if no elements match.
@@ -519,11 +648,9 @@ findBy methods are a combination of getBy\* queries and waitFor. They accept the
 Read more API: https://testing-library.com/docs/react-testing-library/intro
 
 ## Hook Test
-
 We can test the hook too, hook is the best way to separate logic out from UI that why we can test with isolation from UI
 
 ### Test Normal Hook
-
 The '@testing-library/react' package provide API `renderHook` for us to be able to write test for our hooks.
 
 Example we have useSearchTodo.
@@ -631,7 +758,6 @@ const useFetchTodo = () => {
 }
 
 export default useFetchTodo
-
 ```
 
 Testing Library provide waitFor to handle async
@@ -671,6 +797,7 @@ describe("useFetchTodo", () => {
 Sometime we want to test component but component have to used complicated hook inside, a way just mock the hook
 
 Example fetchTodo to List
+
 ```javascript
 // TodoList.tsx
 import useFetchTodo from "../../hooks/useFetchTodo/useFetchTodo"
@@ -694,9 +821,10 @@ const TodoList = () => {
 }
 
 export default TodoList
-
 ```
+
 Mocking with spyOn the useFetchTodo hook also add tests
+
 ```javascript
 // TodoList.test.tsx
 
@@ -705,58 +833,60 @@ import TodoList from "./TodoList"
 import * as useFetchTodos from "../../hooks/useFetchTodo/useFetchTodo"
 
 describe("TodoList", () => {
-    test("should show loading when it is loading", () => {
-        // Arrange
-        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
-        useFetchTodoSpy.mockReturnValue({
-            isLoading: true,
-            todos: [],
-        })
-        render(<TodoList />)
+	test("should show loading when it is loading", () => {
+		// Arrange
+		const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+		useFetchTodoSpy.mockReturnValue({
+			isLoading: true,
+			todos: [],
+		})
+		render(<TodoList />)
 
-        // Act & Assert
-        expect(screen.getByText("Loading...")).toBeInTheDocument()
+		// Act & Assert
+		expect(screen.getByText("Loading...")).toBeInTheDocument()
 
-        // Clean
-        useFetchTodoSpy.mockRestore()
-    })
+		// Clean
+		useFetchTodoSpy.mockRestore()
+	})
 
-    test("should show list empty when fetch empty todos", () => {
-        // Arrange
-        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
-        useFetchTodoSpy.mockReturnValue({
-            isLoading: false,
-            todos: [],
-        })
-        render(<TodoList />)
+	test("should show list empty when fetch empty todos", () => {
+		// Arrange
+		const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+		useFetchTodoSpy.mockReturnValue({
+			isLoading: false,
+			todos: [],
+		})
+		render(<TodoList />)
 
-        // Act & Assert
-        expect(screen.getByRole('list')).toBeInTheDocument()
-        expect(screen.queryAllByRole('listitem')).toHaveLength(0)
-    })
+		// Act & Assert
+		expect(screen.getByRole("list")).toBeInTheDocument()
+		expect(screen.queryAllByRole("listitem")).toHaveLength(0)
+	})
 
-    test("should show list with 2 todo when fetched 2 todos", () => {
-        // Arrange
-        const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
-        useFetchTodoSpy.mockReturnValue({
-            isLoading: false,
-            todos: [{
-                id: "1",
-                title: "Todo 1",
-            },
-            {
-                id: "2",
-                title: "Buy Beer",
-            }],
-        })
-        render(<TodoList />)
+	test("should show list with 2 todo when fetched 2 todos", () => {
+		// Arrange
+		const useFetchTodoSpy = vi.spyOn(useFetchTodos, "default")
+		useFetchTodoSpy.mockReturnValue({
+			isLoading: false,
+			todos: [
+				{
+					id: "1",
+					title: "Todo 1",
+				},
+				{
+					id: "2",
+					title: "Buy Beer",
+				},
+			],
+		})
+		render(<TodoList />)
 
-        // Act & Assert
-        expect(screen.getByRole('list')).toBeInTheDocument()
-        const allItems = screen.queryAllByRole('listitem')
-        expect(allItems).toHaveLength(2)
-        expect(allItems[0]).toHaveTextContent("Todo 1")
-        expect(allItems[1]).toHaveTextContent("Buy Beer")
-    })
+		// Act & Assert
+		expect(screen.getByRole("list")).toBeInTheDocument()
+		const allItems = screen.queryAllByRole("listitem")
+		expect(allItems).toHaveLength(2)
+		expect(allItems[0]).toHaveTextContent("Todo 1")
+		expect(allItems[1]).toHaveTextContent("Buy Beer")
+	})
 })
 ```
