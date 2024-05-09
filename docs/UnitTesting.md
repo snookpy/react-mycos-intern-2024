@@ -93,9 +93,9 @@ describe("useThaiWin", () => {
 Good unit-testing should be;
 
 1.  Each test is solid separately
-1.  One test-case, One problem
-1.  name the test with pattern `Test, when should`
-1.  mostly contains these sections `Arrange`, `Act`, `Assert`, `Clean`
+2.  One test-case, One problem
+3.  name the test with pattern `Test, when should`
+4.  mostly contains these sections `Arrange`, `Act`, `Assert`, `Clean`
 
     ```javascript
     test("cal multiply when a is 5 and b is 6 should be 30", () => {
