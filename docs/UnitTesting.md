@@ -3,6 +3,7 @@
 Ensure our component/function/hooks working correctly also it can throw error or give us feedback when it was changed.
 
 ## Contents
+- [Tools](#tools)
 - [Keywords](#keywords)
 - [Test Case](#test-case)
 - [Test Doubles](#test-doubles)
@@ -17,10 +18,46 @@ Ensure our component/function/hooks working correctly also it can throw error or
 	- [Test Async Hook](#test-async-hook)
 	- [Test Component by mock Hook](#test-component-by-mock-hook)
 
+## Tools
+Since this project created by `vite` so, we will use `vitest` and `@testing-library/react`
+
+all packages installed
+```javascript
+@testing-library/jest-dom
+
+@testing-library/react
+
+jsdom
+
+vitest
+```
+then, config in `viteConfig`
+```javascript
+/* vite.config.ts */
+
+/// <reference types="vitest" />
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/config/setupTest.ts'
+  }
+})
+
+/* src/config/setupTest.ts */
+import '@testing-library/jest-dom'
+
+```
 ## Keywords
 Wording in unit-testing field, may have another depends on Programming Language/ Framework etc...
 
-**Test framework** (we use @testing-library/react)-> contain tools,helper for testing a component/function
+**Test framework** (we use @testing-library/react)-> contain tools, helper for testing a component/function
 
 **Test Runner** (we use vitest) -> Can compile Test, build test like complier in programming language
 
