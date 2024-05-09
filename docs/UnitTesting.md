@@ -412,12 +412,10 @@ describe("calculator", () => {
 Read more: https://vitest.dev/guide/mocking.html
 
 ## UI Testing
-
 In Presentation component we show some view and we make sure it show as we expected
 It have many third party help react test, now we `@testing-library/react"`
 
 ### Snapshot Test
-
 we save latest change of the component, if some one edit the file accidentally it will throw error
 
 ```javascript
@@ -644,6 +642,17 @@ queryAllBy...: Returns an array of all matching nodes for a query, and return an
 
 findAllBy...: Returns a promise which resolves to an array of elements when any elements are found which match the given query. The promise is rejected if no elements are found after a default timeout of 1000ms.
 findBy methods are a combination of getBy\* queries and waitFor. They accept the waitFor options as the last argument (i.e. await screen.findByText('text', queryOptions, waitForOptions))
+
+#### struck how to find element or element too complicated
+we can manually add `data-testid` to element and get with `findByTestId`
+
+```javascript
+<div data-testid="test-id-purpose" />
+
+...
+
+screen.findByTestId("test-id-purpose")
+```
 
 Read more API: https://testing-library.com/docs/react-testing-library/intro
 
