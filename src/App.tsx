@@ -2,9 +2,14 @@ import { useState } from "react"
 import reactLogo from "./assets/react.svg"
 import viteLogo from "/vite.svg"
 import "./App.css"
+import useThaiWin from "./hooks/useThaiWin/useThaiWin"
 
 function App() {
 	const [count, setCount] = useState(0)
+	const [isLogin, setEnter, setExit] = useThaiWin();
+
+	console.log("before : ", isLogin, setEnter, " : after", isLogin)
+	console.log("before : ", isLogin, setExit, " : after", isLogin)
 
 	return (
 		<>
